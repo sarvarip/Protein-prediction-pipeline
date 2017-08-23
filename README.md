@@ -1,4 +1,3 @@
-# hello-world
-Just another repository
+# Protein-prediction-pipeline
 
-Hi everyone! I am a student and this is my first GitHub repository.
+Repository for Imperial-MIT IROP project about An open-source machine learning pipeline tuned for predicting short peptides with therapeutic activities
