@@ -11,6 +11,7 @@ from keras.optimizers import Adam
 import inputoutput as IO
 import pandas as pd
 from sklearn.manifold import TSNE
+from keras import backend as K
 
 def num_vector_from_descriptor_vector(descriptor_vector):
     '''
@@ -95,9 +96,9 @@ for layer in loaded_model.layers:
     weights = layer.get_weights() # list of numpy arrays
     if i == 2:
         w1 = weights
-    if i == 6:
+    if i == 5:
         w2 = weights
-    if i == 10:
+    if i == 8:
         w3 = weights
     i = i + 1
 
@@ -115,6 +116,12 @@ for k in list(range(numrows)):
     else:
         neg_compressed = np.append(neg_compressed, [h3], axis=0)
 
+# get_10th_layer_output = K.function([loaded_model.layers[0].input],
+#                                   [loaded_model.layers[10].output])
+# layer_output = get_10th_layer_output([neg_nmat])[0]
+# layer_output
+# does not seem to work in Theano
+
 pos_nmat = np.array(pos_nmat)
 
 pos_nmat -= mean
@@ -131,9 +138,9 @@ for layer in loaded_model.layers:
     weights = layer.get_weights() # list of numpy arrays
     if i == 2:
         w1 = weights
-    if i == 6:
+    if i == 5:
         w2 = weights
-    if i == 10:
+    if i == 8:
         w3 = weights
     i = i + 1
 

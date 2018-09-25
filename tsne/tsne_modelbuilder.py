@@ -17,17 +17,17 @@ def build_sequential_model(rate, shape):
     model.add(Dropout(0.2, input_shape=(shape,)))
 
     model.add(Dense(16, activation="linear", kernel_constraint=maxnorm(3)))
-    model.add(BatchNormalization())
+    #model.add(BatchNormalization())
     model.add(Activation('relu'))
     model.add(Dropout(rate))
 
     model.add(Dense(8, activation="linear", kernel_constraint=maxnorm(3)))
-    model.add(BatchNormalization())
+    #model.add(BatchNormalization())
     model.add(Activation('relu'))
     model.add(Dropout(rate))
 
     model.add(Dense(4, activation="linear", kernel_constraint=maxnorm(3)))
-    model.add(BatchNormalization())
+    #model.add(BatchNormalization())
     model.add(Activation('relu'))
     model.add(Dropout(rate))
 
