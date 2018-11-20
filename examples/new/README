@@ -1,0 +1,2 @@
+Choice==1 tested and updated
+Note that for using the already extracted cancer data (pipeline_complete_anticancer_v3_pseaac_acc) pickle, old_dataset must be set to one, since data was extracted the old way!
