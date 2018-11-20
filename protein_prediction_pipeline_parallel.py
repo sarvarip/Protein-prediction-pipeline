@@ -34,7 +34,7 @@ seed = 7
 
 vector_name = "pipeline_default"
 model_name = "pipeline_default"
-numcores = 4 
+numcores = 4
 
 #kfolds(0) or test set already provided(1) or Crossval(2) or None(3) or Merge provided test set with train set and do kfolds(4) or Crossval(5); or Predict(6) NOTE that class imbalance occurs/may occur during options 1! Choice zero maintains class balance as "The folds are made by preserving the percentage of samples for each class."
 #By the same way, now choice 2 and 3 also maintains stratification (class balance)!
@@ -47,6 +47,12 @@ already_extracted = 0
 
 pos_input_name = "insert_name"
 neg_input_name = "insert_name"
+
+'''Only If choice 2/4/5 is chosen'''
+
+already_extracted_test = 0
+pos_input_test = "insert_name"
+neg_input_test = "insert_name"
 
 '''Only If prediction (choice 6) is chosen'''
 
@@ -82,9 +88,8 @@ if choice==6:
     predict_pos_name = "pos_" + vector_name + "_predict"
     predict_neg_name = "neg_" + vector_name + "_predict"
 
-if choice!=1:
-    posfile = pos_input_name
-    negfile = neg_input_name
+posfile = pos_input_name
+negfile = neg_input_name
 
 def main(model=None):
 
@@ -100,9 +105,10 @@ def main(model=None):
             pos_samples = extract_descriptors_from_file_to_pickle(pos_input_name, pos_name)
             if use_random_small_sequence_negative==0:
                 extract_descriptors_from_file_to_pickle(neg_input_name, neg_name, pos_samples)
-            if choice==1 or choice==4 or choice==5:
-                extract_descriptors_from_file_to_pickle("Insert_name", postest)
-                extract_descriptors_from_file_to_pickle("insert_name", negtest)
+        if choice==1 or choice==4 or choice==5:
+            if already_extracted_test == 0:
+                extract_descriptors_from_file_to_pickle(pos_input_test, postest)
+                extract_descriptors_from_file_to_pickle(neg_input_test, negtest)
 
 
         print("Deserializing descriptor vectors...")
@@ -153,7 +159,7 @@ def main(model=None):
         neg_nvec = FX.num_vector_from_descriptor_vector(dvec)
         neg_nmat.append(neg_nvec)
 
-    if choice==1 or choice==4:
+    if choice==1 or choice==4 or choice==5:
         pos_nmat_test = []
         for dvec in pos_dvec_test:
             if dvec is None:
@@ -464,7 +470,7 @@ def extract_descriptors_from_file_to_pickle(inputfile, outputfile, num_pos_sampl
             input()
         seqs = newseqs
     #s_x_desc = time.time()
-    manager = Manager().list()
+    dvecs = Manager().list()
     current_seq = Value('i', 1)
     dropped = 0
     lock = Lock()
