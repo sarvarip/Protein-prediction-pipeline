@@ -1,5 +1,5 @@
 from pydpi.pydrug import Chem
-from pydpi.drug import *
+from pydpi.drug import kappa, charge, moreaubroto, molproperty, basak
 from pydpi.protein import PseudoAAC, CTD
 from pydpi.protein import AAComposition_extra_PS
 
